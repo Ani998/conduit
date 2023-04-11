@@ -37,6 +37,10 @@ class TestConduit(object):
 
 # ATC_002 - REGISZTRÁCIÓ
 
+    def registration(self):
+        self.
+
+
 # ATC_003 - BEJELENTKEZÉS
 
 # ATC_004 - ADATOK LISTÁZÁSA
