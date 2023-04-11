@@ -39,7 +39,6 @@ class TestConduit(object):
 
 
 
-
 # ATC_003 - BEJELENTKEZÉS
 
 # ATC_004 - ADATOK LISTÁZÁSA
