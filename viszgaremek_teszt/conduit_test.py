@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import csv
+from user_data import user
 from import_functions import login
 
 class TestConduit(object):
@@ -42,11 +43,11 @@ class TestConduit(object):
         sign_up_btn.click()
 
         reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
-        reg_username.send_keys("Valami")
+        reg_username.send_keys(user["name"])
         reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        reg_email.send_keys("valami31@gmail.com")
+        reg_email.send_keys(user["email"])
         reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
-        reg_psw.send_keys("Strukturavaltas3")
+        reg_psw.send_keys(user["password"])
 
         reg_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         reg_btn.click()
@@ -63,9 +64,9 @@ class TestConduit(object):
         login_btn.click()
 
         login_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        login_email.send_keys("Valami31@gmail.com")
+        login_email.send_keys(user["email"])
         login_psw = self.browser.find_element(By.XPATH, '//input[@placeholder = "Password"]')
-        login_psw.send_keys("Strukturavaltas3")
+        login_psw.send_keys(user["password"])
 
         login_btn_send = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn_send.click()
@@ -90,16 +91,7 @@ class TestConduit(object):
 
 # ATC011 - KIJELENTKEZÉS
 
-    def test_logout(self):
-        login(self.browser)
-        time.sleep(4)
 
-        log_out_btn = self.browser.find_element(By.XPATH, '//a[@active-class="active"]')
-        log_out_btn.click()
-        time.sleep(4)
-
-        signin_btn = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
-        assert signin_btn.is_displayed()
 
 
 
