@@ -26,7 +26,7 @@ class TestConduit(object):
     def teardown_method(self):
         self.browser.quit()
 
-#ATC001 - ADATKEZELÉSI NYILATKOZAT HASZNÁLATA (Sütik elfogadása)
+# ATC001 - ADATKEZELÉSI NYILATKOZAT HASZNÁLATA (Sütik elfogadása)
     def test_accept_cookies(self):
         accept_btn = self.browser.find_element(By.XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--accept']")
         accept_btn.click()
@@ -42,20 +42,36 @@ class TestConduit(object):
         sign_up_btn.click()
 
         reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
-        reg_username.send_keys("Valami2")
+        reg_username.send_keys("Valami")
         reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        reg_email.send_keys("valami3@gmail.com")
+        reg_email.send_keys("valami16@gmail.com")
         reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         reg_psw.send_keys("Strukturavaltas3")
         time.sleep(2)
+
         reg_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         reg_btn.click()
 
-        registration_message = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
-        assert registration_message.text == "Welcome!"
+        registration_msg = WebDriverWait(self.browser, 7).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        assert registration_msg.text == "Welcome!"
 
 
 # ATC003 - BEJELENTKEZÉS
+    def test_login(self):
+        login_btn = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
+        login_btn.click()
+
+        login_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
+        login_email.send_keys("Valami16@gmail.com")
+        login_psw = self.browser.find_element(By.XPATH, '//input[@placeholder = "Password"]')
+        login_psw.send_keys("Strukturavaltas3")
+
+        login_btn_send = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+        login_btn_send.click()
+
+        my_feed = WebDriverWait(self.browser, 7).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        assert my_feed.is_displayed()
+
 
 
 
