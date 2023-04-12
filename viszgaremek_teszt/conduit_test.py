@@ -91,7 +91,14 @@ class TestConduit(object):
 
 # ATC011 - KIJELENTKEZÉS
 
+    def test_log_out(self):
+        login(self.browser)
 
+        logout_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@active-class="active"]')))
+        logout_btn.click()
+
+        signin_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
+        assert signin_btn.is_displayed()
 
 
 

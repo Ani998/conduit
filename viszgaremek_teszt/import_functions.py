@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
+from user_data import user
 
 def registration(browser):
     sign_up_btn = browser.find_element(By.LINK_TEXT, 'Sign up')
@@ -22,15 +23,15 @@ def registration(browser):
     ok_btn.click()
     time.sleep(3)
 def login(browser):
-    login_btn = browser.find_element(By.XPATH, '//a[@href="#/login"]')
-    login_btn.click()
+    signin_btn = browser.find_element(By.XPATH, '//a[@href="#/login"]')
+    signin_btn .click()
 
     login_email = browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-    login_email.send_keys("Valami24@gmail.com")
-    login_psw = browser.find_element(By.XPATH, '//input[@placeholder = "Password"]')
-    login_psw.send_keys("Strukturavaltas3")
+    login_email.send_keys(user["email"])
+    login_psw = browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
+    login_psw.send_keys(user["password"])
+    time.sleep(10)
 
-    login_btn_send = browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
-    login_btn_send.click()
-
+    signin_btn = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+    signin_btn.click()
     time.sleep(5)
