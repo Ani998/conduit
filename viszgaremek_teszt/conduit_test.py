@@ -44,10 +44,9 @@ class TestConduit(object):
         reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
         reg_username.send_keys("Valami")
         reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        reg_email.send_keys("valami16@gmail.com")
+        reg_email.send_keys("valami18@gmail.com")
         reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         reg_psw.send_keys("Strukturavaltas3")
-        time.sleep(2)
 
         reg_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         reg_btn.click()
@@ -62,7 +61,7 @@ class TestConduit(object):
         login_btn.click()
 
         login_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        login_email.send_keys("Valami16@gmail.com")
+        login_email.send_keys("Valami18@gmail.com")
         login_psw = self.browser.find_element(By.XPATH, '//input[@placeholder = "Password"]')
         login_psw.send_keys("Strukturavaltas3")
 
@@ -72,10 +71,9 @@ class TestConduit(object):
         my_feed = WebDriverWait(self.browser, 7).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert my_feed.is_displayed()
 
+# ATC004 - ADATOK LISTÁZÁSA (Bejegyzések listázása tag alapján)
+    #def test_listing(self):
 
-
-
-# ATC_004 - ADATOK LISTÁZÁSA
 # ATC_005 - TÖBB OLDALAS LISTA BEJÁRÁSA
 # ATC_006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
 # ATC_007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
