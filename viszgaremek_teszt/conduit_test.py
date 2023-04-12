@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import csv
-
+from import_functions import login
 
 class TestConduit(object):
     def setup_method(self):
@@ -36,7 +36,7 @@ class TestConduit(object):
         assert cookie_accepted["value"] == "accept"
         time.sleep(2)
 
-# ATC002 - REGISZTRÁCIÓ
+# ATC002 - REGISZTRÁCIÓ (Regisztráció helyes adatokkal)
     def test_registration(self):
         sign_up_btn = self.browser.find_element(By.LINK_TEXT, 'Sign up')
         sign_up_btn.click()
@@ -44,42 +44,64 @@ class TestConduit(object):
         reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
         reg_username.send_keys("Valami")
         reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        reg_email.send_keys("valami18@gmail.com")
+        reg_email.send_keys("valami31@gmail.com")
         reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         reg_psw.send_keys("Strukturavaltas3")
 
         reg_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         reg_btn.click()
 
-        registration_msg = WebDriverWait(self.browser, 7).until(EC.presence_of_element_located((By.XPATH, '//div[@class="swal-title"]')))
+        time.sleep(5)
+
+        registration_msg = self.browser.find_element(By.XPATH, '//div[@class="swal-title"]')
         assert registration_msg.text == "Welcome!"
 
 
-# ATC003 - BEJELENTKEZÉS
+# ATC003 - BEJELENTKEZÉS (Bejelentkezés helyes adatokkal)
     def test_login(self):
         login_btn = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
         login_btn.click()
 
         login_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        login_email.send_keys("Valami18@gmail.com")
+        login_email.send_keys("Valami31@gmail.com")
         login_psw = self.browser.find_element(By.XPATH, '//input[@placeholder = "Password"]')
         login_psw.send_keys("Strukturavaltas3")
 
         login_btn_send = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
         login_btn_send.click()
 
-        my_feed = WebDriverWait(self.browser, 7).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
+        time.sleep(7)
+
+        my_feed = self.browser.find_element(By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')
         assert my_feed.is_displayed()
 
 # ATC004 - ADATOK LISTÁZÁSA (Bejegyzések listázása tag alapján)
-    #def test_listing(self):
 
-# ATC_005 - TÖBB OLDALAS LISTA BEJÁRÁSA
-# ATC_006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
-# ATC_007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
-# ATC_008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
-# ATC_009 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
-# ATC_010 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
-# ATC_011 - KIJELENTKEZÉS
+
+# ATC005 - TÖBB OLDALAS LISTA BEJÁRÁSA
+
+# ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
+
+# ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
+
+# ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
+# ATC009 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+# ATC010 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+
+# ATC011 - KIJELENTKEZÉS
+
+    def test_logout(self):
+        login(self.browser)
+        time.sleep(4)
+
+        log_out_btn = self.browser.find_element(By.XPATH, '//a[@active-class="active"]')
+        log_out_btn.click()
+        time.sleep(4)
+
+        signin_btn = self.browser.find_element(By.XPATH, '//a[@href="#/login"]')
+        assert signin_btn.is_displayed()
+
+
+
 
 
