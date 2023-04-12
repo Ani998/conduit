@@ -44,7 +44,7 @@ class TestConduit(object):
         reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
         reg_username.send_keys("Valami2")
         reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-        reg_email.send_keys("valami2@gmail.com")
+        reg_email.send_keys("valami3@gmail.com")
         reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
         reg_psw.send_keys("Strukturavaltas3")
         time.sleep(2)
@@ -56,6 +56,7 @@ class TestConduit(object):
 
 
 # ATC003 - BEJELENTKEZÉS
+
 
 
 # ATC_004 - ADATOK LISTÁZÁSA
