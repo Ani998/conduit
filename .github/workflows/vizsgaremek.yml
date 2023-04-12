@@ -1,12 +1,10 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Vizsgaremek
+name: Conduit vizsgaremek
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
     branches: [ "master" ]
 
 permissions:
@@ -19,7 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: docker-compose up -d
+    - name: Docker build for test
+      run: docker-compose up -d
     - name: Sleep for 60 seconds
       run: sleep 60s
       shell: bash
@@ -35,6 +34,7 @@ jobs:
     - name: Test with pytest
       run: |
         pytest --alluredir=allure-results
+        
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
       if: always()
