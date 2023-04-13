@@ -11,6 +11,7 @@ import csv
 from user_data import user
 from import_functions import login
 
+# teszt
 class TestConduit(object):
     def setup_method(self):
         service = Service(executable_path=ChromeDriverManager().install())
