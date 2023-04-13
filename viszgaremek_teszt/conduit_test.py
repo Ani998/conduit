@@ -76,7 +76,7 @@ class TestConduit(object):
         my_feed = self.browser.find_element(By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')
         assert my_feed.is_displayed()
 
-# ATC004 - ADATOK LISTÁZÁSA (Bejegyzések listázása tag alapján)
+# ATC004 - ADATOK LISTÁZÁSA (Adott felhasználó bejegyzéseinek listázása)
 
 
 # ATC005 - TÖBB OLDALAS LISTA BEJÁRÁSA

@@ -4,22 +4,22 @@ from selenium.webdriver.support.wait import WebDriverWait
 import time
 from user_data import user
 
-def registration(browser):
-    sign_up_btn = browser.find_element(By.LINK_TEXT, 'Sign up')
+def registration(self):
+    sign_up_btn = self.browser.find_element(By.LINK_TEXT, 'Sign up')
     sign_up_btn.click()
 
-    reg_username = browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
-    reg_username.send_keys("Valami")
-    reg_email = browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
-    reg_email.send_keys("valami28@gmail.com")
-    reg_psw = browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
+    reg_username = self.browser.find_element(By.XPATH, '//input[@placeholder="Username"]')
+    reg_username.send_keys(user["name"])
+    reg_email = self.browser.find_element(By.XPATH, '//input[@placeholder="Email"]')
+    reg_email.send_keys(user["email"])
+    reg_psw = self.browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
     reg_psw.send_keys("Strukturavaltas3")
 
-    reg_btn = browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
+    reg_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')
     reg_btn.click()
 
     time.sleep(5)
-    ok_btn = browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
+    ok_btn = self.browser.find_element(By.XPATH, '//button[@class="swal-button swal-button--confirm"]')
     ok_btn.click()
     time.sleep(3)
 def login(browser):
