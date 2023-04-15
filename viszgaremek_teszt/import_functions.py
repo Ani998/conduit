@@ -32,8 +32,7 @@ def login(browser):
     login_email.send_keys(user["email"])
     login_psw = browser.find_element(By.XPATH, '//input[@placeholder="Password"]')
     login_psw.send_keys(user["password"])
-    time.sleep(10)
 
-    signin_btn = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
+    signin_btn = WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.XPATH, '//button[@class="btn btn-lg btn-primary pull-xs-right"]')))
     signin_btn.click()
     time.sleep(5)

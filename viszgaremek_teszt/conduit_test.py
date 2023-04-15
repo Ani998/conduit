@@ -6,9 +6,9 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import time
-import csv
-from user_data import user
+#import time
+#import csv
+#from user_data import user
 from import_functions import login, registration
 
 
@@ -32,11 +32,8 @@ class TestConduit(object):
     def test_accept_cookies(self):
         accept_btn = self.browser.find_element(By.XPATH, "//button[@class= 'cookie__bar__buttons__button cookie__bar__buttons__button--accept']")
         accept_btn.click()
-        time.sleep(2)
-
         cookie_accepted = self.browser.get_cookie("vue-cookie-accept-decline-cookie-policy-panel")
         assert cookie_accepted["value"] == "accept"
-
 
 # ATC002 - REGISZTRÁCIÓ (Regisztráció helyes adatokkal)
     def test_registration(self):
@@ -49,15 +46,27 @@ class TestConduit(object):
 # ATC003 - BEJELENTKEZÉS (Bejelentkezés helyes adatokkal)
     def test_login(self):
         login(self.browser)
+
         my_feed = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@class="nav-link router-link-exact-active active"]')))
         assert my_feed.is_displayed()
 
-# ATC004 - ADATOK LISTÁZÁSA (Adott felhasználó bejegyzéseinek listázása)
+# ATC004 - ADATOK LISTÁZÁSA (Lorem taggel rendlkező bejegyzések listázása)
+
+    def test_listing(self):
+        login(self.browser)
+
+        lorem_tag = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//div/div/a[@href="#/tag/lorem"]')))
+        lorem_tag.click()
+        articles = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="preview-link"]/h1')))
+        assert len(articles) != 0
 
 
 # ATC005 - TÖBB OLDALAS LISTA BEJÁRÁSA
 
 # ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
+
+   # def test_new_article(self):
+
 
 # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
 
