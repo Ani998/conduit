@@ -10,6 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 #import csv
 #from user_data import user
 from import_functions import login, registration
+from articles import arcticle1
 
 
 class TestConduit(object):
@@ -17,7 +18,7 @@ class TestConduit(object):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(service=service, options=options)
@@ -63,14 +64,37 @@ class TestConduit(object):
 
 # ATC005 - TÖBB OLDALAS LISTA BEJÁRÁSA
 
-# ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
 
-   # def test_new_article(self):
+# ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
+    def test_new_article(self):
+        login(self.browser)
+        new_article_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+        new_article_btn.click()
+        article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+        article_title.send_keys(arcticle1["title"])
+        article_about = self.browser.find_element(By.XPATH, '//input[@placeholder="What\'s this article about?"]')
+        article_about.send_keys(arcticle1["about"])
+        article_text = self.browser.find_element(By.XPATH, '//textarea[@placeholder="Write your article (in markdown)"]')
+        article_text.send_keys(arcticle1["text"])
+        article_tag = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
+        article_tag.send_keys(arcticle1["tag"])
+        publish_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg pull-xs-right btn-primary"]')
+        publish_btn.click()
+
+        actual_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'h1')))
+        assert actual_article_title.text == arcticle1["title"]
+
+
+
+
 
 
 # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
 
 # ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
+    #def update_data(self):
+     #   login(self.browser)
+
 # ATC009 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
 # ATC010 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
 
