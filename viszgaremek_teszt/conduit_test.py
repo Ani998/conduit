@@ -6,9 +6,9 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-#import time
-#import csv
-#from user_data import user
+import time
+import csv
+from user_data import user
 from import_functions import login, registration
 from articles import arcticle1
 
@@ -81,12 +81,12 @@ class TestConduit(object):
         publish_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg pull-xs-right btn-primary"]')
         publish_btn.click()
 
-        actual_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'h1')))
+        actual_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert actual_article_title.text == arcticle1["title"]
-
-
-
-
+        #az about csak a saját profilból megnyitva látszik, a bejegyzés előnézetében nem.
+        actual_text = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[1]/p')
+        assert actual_text.text == arcticle1["text"]
+        #a tag szintén csak a saját profilból megnyitva látszik, a bejegyzés előnézetében nem.
 
 
 # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
