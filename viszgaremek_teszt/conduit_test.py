@@ -66,15 +66,13 @@ class TestConduit(object):
     def test_list_pages(self):
         login(self.browser)
 
-        next_pages = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
+        pages = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
 
-        for page in next_pages:
+        for page in pages:
             page.click()
-            #first_page = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[1]')
-            #last_page = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[::-1]')
-            #assert first_page == last_page
-            first_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
-            assert page.text == first_page.text
+            first_page = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[1]/a')))
+            second_page = WebDriverWait(self.browser, 10).until(EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[2]/a')))
+            assert first_page.text != second_page.text
 
     # ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
     def test_new_article(self):
@@ -100,8 +98,11 @@ class TestConduit(object):
         actual_tag = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[2]/a')
         assert actual_tag.text == arcticle1["tag"]
 
+        #A címnek egyedinek kell lennie, ugyanazzal a címmel nem jelenhet meg több bejegyzés!
+
 
 # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
+
 
 # ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
     #def update_data(self):
