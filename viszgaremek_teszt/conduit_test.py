@@ -18,7 +18,7 @@ class TestConduit(object):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
-        options.add_argument('--headless')
+        #options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(service=service, options=options)
@@ -63,9 +63,20 @@ class TestConduit(object):
 
 
 # ATC005 - TÖBB OLDALAS LISTA BEJÁRÁSA
+    def test_list_pages(self):
+        login(self.browser)
 
+        next_pages = WebDriverWait(self.browser, 5).until(EC.presence_of_all_elements_located((By.XPATH, '//a[@class="page-link"]')))
 
-# ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
+        for page in next_pages:
+            page.click()
+            #first_page = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[1]')
+            #last_page = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div/div[1]/div[2]/div/div/nav/ul/li[::-1]')
+            #assert first_page == last_page
+            first_page = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//li[@class="page-item active"]')))
+            assert page.text == first_page.text
+
+    # ATC006 - ÚJ ADAT BEVITEL (Bejegyzés létrehozása)
     def test_new_article(self):
         login(self.browser)
         new_article_btn = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
@@ -86,7 +97,8 @@ class TestConduit(object):
         #az about csak a saját profilból megnyitva látszik, a bejegyzés előnézetében nem.
         actual_text = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[1]/p')
         assert actual_text.text == arcticle1["text"]
-        #a tag szintén csak a saját profilból megnyitva látszik, a bejegyzés előnézetében nem.
+        actual_tag = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[2]/a')
+        assert actual_tag.text == arcticle1["tag"]
 
 
 # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
