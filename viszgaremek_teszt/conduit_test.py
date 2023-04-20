@@ -18,7 +18,7 @@ class TestConduit(object):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(service=service, options=options)
@@ -114,20 +114,20 @@ class TestConduit(object):
 
         # A címnek egyedinek kell lennie, ugyanazzal a címmel nem jelenhet meg több bejegyzés!
 
-    # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
-    '''@allure.title('ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL')
-    def test_data_inputs_from_file(self):'''
+        # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
+        # @allure.title('ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL')
+        # def test_data_inputs_from_file(self):
 
-    # ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
-    # def update_data(self):
-    #   login(self.browser)
 
-    # ATC009 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
 
-    # ATC010 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+    #def test_delete(self):
 
-    # ATC011 - KIJELENTKEZÉS
 
+    # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+
+    # ATC010 - KIJELENTKEZÉS
+    @allure.title('KIJELENTKEZÉS')
     def test_log_out(self):
         login(self.browser)
 
@@ -138,3 +138,32 @@ class TestConduit(object):
         signin_btn = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert signin_btn.is_displayed()
+
+    # ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
+    @allure.title('MEGLÉVŐ ADAT MÓDOSÍTÁS')
+    def test_update_data(self):
+        login(self.browser)
+        setting_btn = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/nav/div/ul/li[3]/a')))
+        setting_btn.click()
+        new_image = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
+            (By.XPATH, '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[1]/input')))
+        new_image.clear()
+        new_image.send_keys('https://static.productionready.io/images/smiley-cyrus.jpg')
+        new_username = self.browser.find_element(By.XPATH,
+                                                 '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[2]/input')
+        new_username.clear()
+        new_username.send_keys('New username')
+        new_bio = self.browser.find_element(By.XPATH,
+                                            '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[3]/textarea')
+        new_bio.clear()
+        new_bio.send_keys('Ez az új bióm')
+        new_password = self.browser.find_element(By.XPATH,
+                                                 '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[5]/input')
+        new_password.clear()
+        new_password.send_keys('Strukturavaltas4')
+        update_btn = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div/div/div/form/fieldset/button')
+        update_btn.click()
+        update_succes_msg = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div[2]/div/div[2]')))
+        assert update_succes_msg.text == 'Update successful!'

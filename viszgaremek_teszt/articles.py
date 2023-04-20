@@ -8,5 +8,17 @@ arcticle2 = {
     "title": "Teszt Cím",
     "about": "Ez egy teszt",
     "text": "Ez pedig a teszt bejegyzés szövege",
+    "tag": "lorem"
+}
+arcticle3 = {
+    "title": "Teszt Cím",
+    "about": "Ez szintén egy teszt",
+    "text": "Ez pedig megint egy teszt bejegyzésnek a szövege",
+    "tag": "valami"
+}
+arcticle4 = {
+    "title": "Teszt Cím",
+    "about": "Még egy bejegyzés",
+    "text": "Igen, ez megint egy új bejegyzés ",
     "tag": "valami"
 }
