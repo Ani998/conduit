@@ -1,8 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Wed Apr 19 17:47:19 GMT 2023","Wed Apr 19 17:47:22 GMT 2023","2360","viszgaremek_teszt","conduit_test","TestConduit","","","REGISZTRÁCIÓ",""
-"passed","Wed Apr 19 17:47:50 GMT 2023","Wed Apr 19 17:47:55 GMT 2023","5286","viszgaremek_teszt","conduit_test","TestConduit","","","test_log_out",""
-"passed","Wed Apr 19 17:47:29 GMT 2023","Wed Apr 19 17:47:34 GMT 2023","5349","viszgaremek_teszt","conduit_test","TestConduit","","","ADATOK LISTÁZÁSA",""
-"passed","Wed Apr 19 17:47:42 GMT 2023","Wed Apr 19 17:47:49 GMT 2023","6920","viszgaremek_teszt","conduit_test","TestConduit","","","ÚJ ADAT BEVITEL",""
-"passed","Wed Apr 19 17:47:36 GMT 2023","Wed Apr 19 17:47:41 GMT 2023","5387","viszgaremek_teszt","conduit_test","TestConduit","","","TÖBB OLDALAS LISTA BEJÁRÁSA",""
-"passed","Wed Apr 19 17:47:23 GMT 2023","Wed Apr 19 17:47:28 GMT 2023","5268","viszgaremek_teszt","conduit_test","TestConduit","","","BEJELENTKEZÉS",""
-"passed","Wed Apr 19 17:47:18 GMT 2023","Wed Apr 19 17:47:18 GMT 2023","45","viszgaremek_teszt","conduit_test","TestConduit","","","ADATKEZELÉSI NYILATKOZAT HASZNÁLATA",""
