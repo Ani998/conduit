@@ -14,6 +14,7 @@ import allure
 import csv
 
 
+# SETUP ÉS TEARDOWN
 class TestConduit(object):
     def setup_method(self):
         service = Service(executable_path=ChromeDriverManager().install())
@@ -140,7 +141,6 @@ class TestConduit(object):
         time.sleep(3)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
-
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
     def test_save_data(self):
