@@ -11,6 +11,7 @@ from user_data import user
 from import_functions import login, registration
 from articles import arcticle1
 import allure
+import csv
 
 
 class TestConduit(object):
@@ -112,19 +113,45 @@ class TestConduit(object):
         actual_tag = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[2]/a')
         assert actual_tag.text == arcticle1["tag"]
 
+        # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
         # A címnek egyedinek kell lennie, ugyanazzal a címmel nem jelenhet meg több bejegyzés!
 
-        # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
-        # @allure.title('ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL')
-        # def test_data_inputs_from_file(self):
+    @allure.title('ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL')
+    def test_data_inputs_from_file(self):
+        login(self.browser)
 
+        with open('more_articles.csv', 'r') as data:
+            datas = csv.reader(data, delimiter=',')
+            next(datas)
+            for i in datas:
+                new_article_btn = WebDriverWait(self.browser, 5).until(
+                    EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
+                new_article_btn.click()
+                article_title = WebDriverWait(self.browser, 5).until(
+                    EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
+                article_about = self.browser.find_element(By.XPATH,
+                                                          '//input[@placeholder="What\'s this article about?"]')
+                article_text = self.browser.find_element(By.XPATH,
+                                                         '//textarea[@placeholder="Write your article (in markdown)"]')
+                article_tag = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
+                publish_btn = self.browser.find_element(By.XPATH,
+                                                        '//button[@class="btn btn-lg pull-xs-right btn-primary"]')
 
+                article_title.send_keys(i[0])
+                article_about.send_keys(i[1])
+                article_text.send_keys(i[2])
+                article_tag.send_keys(i[3])
+                publish_btn.click()
+                time.sleep(3)
+        published_article_title = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//h1')))
+        assert published_article_title.text == i[0]
 
     # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
-    #def test_delete(self):
-
+    # def test_delete(self):
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+    # def test_save_data(self):
 
     # ATC010 - KIJELENTKEZÉS
     @allure.title('KIJELENTKEZÉS')
