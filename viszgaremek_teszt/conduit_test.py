@@ -19,7 +19,7 @@ class TestConduit(object):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
-        options.add_argument('--headless')
+        #options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(service=service, options=options)
@@ -191,10 +191,6 @@ class TestConduit(object):
                                             '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[3]/textarea')
         new_bio.clear()
         new_bio.send_keys('Ez az új bióm')
-        new_password = self.browser.find_element(By.XPATH,
-                                                 '/html/body/div[1]/div/div/div/div/form/fieldset/fieldset[5]/input')
-        new_password.clear()
-        new_password.send_keys('Strukturavaltas4')
         update_btn = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div/div/div/form/fieldset/button')
         update_btn.click()
         update_succes_msg = WebDriverWait(self.browser, 5).until(
