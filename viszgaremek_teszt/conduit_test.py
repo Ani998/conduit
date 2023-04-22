@@ -8,7 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 from user_data import user
-from import_functions import login, registration
+from import_functions import login, registration, new_article
 from articles import arcticle1
 import allure
 import csv
@@ -19,7 +19,7 @@ class TestConduit(object):
         service = Service(executable_path=ChromeDriverManager().install())
         options = Options()
         options.add_experimental_option("detach", True)
-        options.add_argument('--headless')
+        # options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
         self.browser = webdriver.Chrome(service=service, options=options)
@@ -89,21 +89,7 @@ class TestConduit(object):
     @allure.title('ÚJ ADAT BEVITEL')
     def test_new_article(self):
         login(self.browser)
-        new_article_btn = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
-        new_article_btn.click()
-        article_title = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        article_title.send_keys(arcticle1["title"])
-        article_about = self.browser.find_element(By.XPATH, '//input[@placeholder="What\'s this article about?"]')
-        article_about.send_keys(arcticle1["about"])
-        article_text = self.browser.find_element(By.XPATH,
-                                                 '//textarea[@placeholder="Write your article (in markdown)"]')
-        article_text.send_keys(arcticle1["text"])
-        article_tag = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
-        article_tag.send_keys(arcticle1["tag"])
-        publish_btn = self.browser.find_element(By.XPATH, '//button[@class="btn btn-lg pull-xs-right btn-primary"]')
-        publish_btn.click()
+        new_article(self.browser)
 
         actual_article_title = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located((By.XPATH, '//h1')))
         assert actual_article_title.text == arcticle1["title"]
@@ -113,8 +99,8 @@ class TestConduit(object):
         actual_tag = self.browser.find_element(By.XPATH, '/html/body/div[1]/div/div[2]/div[1]/div/div[2]/a')
         assert actual_tag.text == arcticle1["tag"]
 
-        # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
-        # A címnek egyedinek kell lennie, ugyanazzal a címmel nem jelenhet meg több bejegyzés!
+    # ATC007 - ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL (Commentek létrehozása)
+    # A címnek egyedinek kell lennie, ugyanazzal a címmel nem jelenhet meg több bejegyzés!
 
     @allure.title('ISMÉTELT ÉS SOROZATOS ADATBEVITEL ADATFORRÁSBÓL')
     def test_data_inputs_from_file(self):
@@ -157,7 +143,19 @@ class TestConduit(object):
 
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
-    # def test_save_data(self):
+    def test_save_data(self):
+        login(self.browser)
+
+        popular_tags = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, '//div/div/a[@class="tag-pill tag-default"]')))
+
+        tags = []
+        for tag in popular_tags:
+            tags.append(tag.text)
+        print(tags)
+
+        with open('tags', 'w', encoding="UTF-8") as tag_file:
+            tag_file.write(str(tags))
 
     # ATC010 - KIJELENTKEZÉS
     @allure.title('KIJELENTKEZÉS')
@@ -171,7 +169,7 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//a[@href="#/login"]')))
         assert signin_btn.is_displayed()
 
-    # ATC008 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
+    # ATC011 - MEGLÉVŐ ADAT MÓDOSÍTÁS (Profiladatok módosítása)
     @allure.title('MEGLÉVŐ ADAT MÓDOSÍTÁS')
     def test_update_data(self):
         login(self.browser)
