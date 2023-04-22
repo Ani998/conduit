@@ -107,7 +107,7 @@ class TestConduit(object):
     def test_data_inputs_from_file(self):
         login(self.browser)
 
-        with open('more_articles.csv', 'r') as data:
+        with open('vizsgaremek_teszt/more_articles.csv', 'r') as data:
             datas = csv.reader(data, delimiter=',')
             next(datas)
             for i in datas:
