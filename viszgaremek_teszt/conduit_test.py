@@ -148,7 +148,13 @@ class TestConduit(object):
         assert published_article_title.text == i[0]
 
     # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
-    # def test_delete(self):
+    @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
+    def test_delete(self):
+        login(self.browser)
+        time.sleep(3)
+        open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
+        open_article.click()
+
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
     # def test_save_data(self):
