@@ -141,6 +141,17 @@ class TestConduit(object):
         time.sleep(3)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
+        new_comment = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[1]/textarea')))
+        new_comment.send_keys('This comment will be gone soon hopefully...')
+        post_comment_btn = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[2]/button')
+        post_comment_btn.click()
+        trash_icon = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/span[2]')))
+        trash_icon.click()
+        time.sleep(5)
+        new_comment_text = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]/p')
+        assert new_comment_text.text != 'This comment will be gone soon hopefully...'
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
     def test_save_data(self):
