@@ -135,25 +135,26 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//h1')))
         assert published_article_title.text == i[0]
 
-    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Comment törlése)
-    '''@allure.title('ADAT VAGY ADATOK TÖRLÉSE')
+    '''# ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+    @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
     def test_delete(self):
         login(self.browser)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
         comment = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div/form/div[1]/textarea')))
-        comment.send_keys('This comment will be deleted soon...')
-        post_comment = self.browser.find_element(By.XPATH,
-                                                 '/html/body/div/div/div[2]/div[2]/div/div/form/div[2]/button')
+        comment.send_keys('Valami')
+        time.(5)
+        post_comment = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div/form/div[2]/button')
         post_comment.click()
-        trash = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/span[2]/i')))
-        trash.click()
-        first_comment = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]')))
-        time.sleep(3)
-        assert first_comment.text != 'This comment will be deleted soon...'''
+
+
+article_url = self.browser.current_url
+        delete_btn = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_all_elements_located((By.XPATH, '/html/body/div[1]/div/div[1]/div/div/span/button/span')))
+        delete_btn.click()
+        new_url = self.browser.current_url
+        assert article_url != new_url'''
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
     @allure.title('ADATOK LEMENTÉSE FELÜLETRŐL')
