@@ -107,10 +107,11 @@ class TestConduit(object):
     def test_data_inputs_from_file(self):
         login(self.browser)
 
-        with open('vizsgaremek_teszt/more_articles.csv', 'r') as data:
-            datas = csv.reader(data, delimiter=',')
-            next(datas)
-            for i in datas:
+        with open('vizsgaremek_teszt/more_articles.csv', 'r', encoding='UTF-8') as data:
+            articles = csv.reader(data, delimiter=';')
+            next(articles)
+
+            for i in articles:
                 new_article_btn = WebDriverWait(self.browser, 5).until(
                     EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
                 new_article_btn.click()
@@ -134,15 +135,28 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//h1')))
         assert published_article_title.text == i[0]
 
-    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Comment törlése)
     @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
     def test_delete(self):
         login(self.browser)
-        time.sleep(3)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
+        comment = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div/form/div[1]/textarea')))
+        comment.send_keys('This comment will be deleted soon...')
+        post_comment = self.browser.find_element(By.XPATH,
+                                                 '/html/body/div/div/div[2]/div[2]/div/div/form/div[2]/button')
+        post_comment.click()
+        trash = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/span[2]/i')))
+        trash.click()
+        first_comment = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]')))
+        time.sleep(3)
+        assert first_comment.text != 'This comment will be deleted soon...'
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+    @allure.title('ADATOK LEMENTÉSE FELÜLETRŐL')
     def test_save_data(self):
         login(self.browser)
 
