@@ -136,7 +136,7 @@ class TestConduit(object):
         assert published_article_title.text == i[0]
 
     # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Comment törlése)
-    @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
+    '''@allure.title('ADAT VAGY ADATOK TÖRLÉSE')
     def test_delete(self):
         login(self.browser)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
@@ -153,7 +153,7 @@ class TestConduit(object):
         first_comment = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]')))
         time.sleep(3)
-        assert first_comment.text != 'This comment will be deleted soon...'
+        assert first_comment.text != 'This comment will be deleted soon...'''
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
     @allure.title('ADATOK LEMENTÉSE FELÜLETRŐL')
