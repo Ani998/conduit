@@ -7,7 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time
-from user_data import user
 from import_functions import login, registration, new_article
 from articles import arcticle1
 import allure
@@ -31,6 +30,7 @@ class TestConduit(object):
     def teardown_method(self):
         self.browser.quit()
 
+    # TESZTEK
     # ATC001 - ADATKEZELÉSI NYILATKOZAT HASZNÁLATA (Sütik elfogadása)
     @allure.title('ADATKEZELÉSI NYILATKOZAT HASZNÁLATA')
     def test_accept_cookies(self):
@@ -142,15 +142,19 @@ class TestConduit(object):
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
         comment_input = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[1]/textarea')))
+            EC.presence_of_element_located(
+                (By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[1]/textarea')))
         comment_input.send_keys('This comment will be gone soon hopefully...')
-        post_comment_btn = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[2]/button')
+        post_comment_btn = self.browser.find_element(By.XPATH,
+                                                     '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[2]/button')
         post_comment_btn.click()
         trash_icon = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/span[2]')))
         trash_icon.click()
         time.sleep(5)
-        new_comment_text = self.browser.find_elements(By.CSS_SELECTOR, 'html body div#app div.article-page div.container.page div.row div.col-xs-12.col-md-8.offset-md-2')[0]
+        new_comment_text = self.browser.find_elements(By.CSS_SELECTOR,
+                                                      'html body div#app div.article-page div.container.page div.row div.col-xs-12.col-md-8.offset-md-2')[
+            0]
         assert new_comment_text.text != 'This comment will be gone soon hopefully...'
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
