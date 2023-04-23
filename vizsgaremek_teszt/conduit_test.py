@@ -134,7 +134,7 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//h1')))
         assert published_article_title.text == i[0]
 
-    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Comment törlése)
     @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
     def test_delete(self):
         login(self.browser)
@@ -154,6 +154,7 @@ class TestConduit(object):
         assert new_comment_text.text != 'This comment will be gone soon hopefully...'
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
+    @allure.title('ADATOK LEMENTÉSE FELÜLETRŐL')
     def test_save_data(self):
         login(self.browser)
 
