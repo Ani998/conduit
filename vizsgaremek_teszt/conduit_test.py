@@ -146,11 +146,12 @@ class TestConduit(object):
         new_comment.send_keys('This comment will be gone soon hopefully...')
         post_comment_btn = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[1]/form/div[2]/button')
         post_comment_btn.click()
+        new_comment_text = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]/p')))
         trash_icon = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[2]/span[2]')))
         trash_icon.click()
         time.sleep(5)
-        new_comment_text = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div[2]/div[1]/p')
         assert new_comment_text.text != 'This comment will be gone soon hopefully...'
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
