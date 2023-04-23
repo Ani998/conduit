@@ -107,11 +107,10 @@ class TestConduit(object):
     def test_data_inputs_from_file(self):
         login(self.browser)
 
-        with open('vizsgaremek_teszt/more_articles.csv', 'r', encoding='UTF-8') as data:
-            articles = csv.reader(data, delimiter=';')
-            next(articles)
-
-            for i in articles:
+        with open('vizsgaremek_teszt/more_articles.csv', 'r') as data:
+            datas = csv.reader(data, delimiter=',')
+            next(datas)
+            for i in datas:
                 new_article_btn = WebDriverWait(self.browser, 5).until(
                     EC.presence_of_element_located((By.XPATH, '//a[@href="#/editor"]')))
                 new_article_btn.click()
@@ -135,29 +134,15 @@ class TestConduit(object):
             EC.presence_of_element_located((By.XPATH, '//h1')))
         assert published_article_title.text == i[0]
 
-    '''# ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
+    # ATC008 - ADAT VAGY ADATOK TÖRLÉSE (Bejegyzés törlése)
     @allure.title('ADAT VAGY ADATOK TÖRLÉSE')
     def test_delete(self):
         login(self.browser)
+        time.sleep(3)
         open_article = self.browser.find_elements(By.CSS_SELECTOR, 'h1')[1]
         open_article.click()
-        comment = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div/form/div[1]/textarea')))
-        comment.send_keys('Valami')
-        time.(5)
-        post_comment = self.browser.find_element(By.XPATH, '/html/body/div/div/div[2]/div[2]/div/div/form/div[2]/button')
-        post_comment.click()
-
-
-article_url = self.browser.current_url
-        delete_btn = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_all_elements_located((By.XPATH, '/html/body/div[1]/div/div[1]/div/div/span/button/span')))
-        delete_btn.click()
-        new_url = self.browser.current_url
-        assert article_url != new_url'''
 
     # ATC09 - ADATOK LEMENTÉSE FELÜLETRŐL (Tagek mentése)
-    @allure.title('ADATOK LEMENTÉSE FELÜLETRŐL')
     def test_save_data(self):
         login(self.browser)
 
